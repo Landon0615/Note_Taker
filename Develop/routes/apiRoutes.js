@@ -1,41 +1,46 @@
-const express = require('express');
 const fs = require('fs');
+const express = require('express');
 
+const notesArr = require('../db/db.json');
 const router = express.Router();
 
-let noteData = require("../db/db.json")
 
-    router.get("/api/notes", (req, res)=>{
-      return res.json(noteData)
-    })
+
+    let addNote = notesArr.length;
+
+    router.get('/api/notes', function (req, res) {
+        res.json(notesArr);
+    });
+
+    router.post('/api/notes', function (req, res) {
+        let id = '' + addNote;
+        let noteSaved = req.body;
+        
+
+        noteSaved.id = id;
+        addNote = addNote + 1;
+        
+        notesArr.push(noteSaved);
+
+        fs.writeFile('./db/db.json', JSON.stringify(notesArr), () => {
+            console.log('Note saved.');});
+
+        res.json(noteSaved);
+    });
+
+
+    router.delete('/api/notes/:id', function (req, res) {
+
+        let picked = req.params.id;
+        for (let i = 0; i < notesArr.length; i++) {
+            if (picked === notesArr[i].id) {
+                notesArr.splice(i, 1);
+                fs.writeFile('./db/db.json', JSON.stringify(notesArr), () => {
+                    console.log('Note deleted.');});
+            };
+        };
+
+        res.json(notesArr);
+    });
 
 module.exports = router;
-
-
-
-
-// router.get("/api/newNote", function(req, res) {
-//   connection.query("SELECT * FROM notes", function(err, dbnewNote) {
-//     if (err) throw err;
-
-//     res.json(dbnewNote);
-//   });
-// });
-
-// router.post("/api/newNote", function(req, res) {
-//   connection.query("INSERT INTO notes SET ?", [req.body], function(err, result) {
-//     if (err) throw err;
-
-//     res.json(result);
-//   });
-// });
-
-// router.put("/api/newNote/:id", function(req, res) {
-//   connection.query("UPDATE notes SET ? WHERE id = ?", [req.body, req.params.id], function(err, result) {
-//     if (err) throw err;
-
-//     res.json(result);
-//   });
-// });
-
-// module.exports = router;
