@@ -7,12 +7,12 @@ const router = express.Router();
 
 
     let addNote = notesArr.length;
-
-    router.get('/api/notes', function (req, res) {
+    router.route('/api/notes')
+    .get((req, res) => {
         res.json(notesArr);
-    });
+    })
 
-    router.post('/api/notes', function (req, res) {
+    .post((req, res) => {
         let id = '' + addNote;
         let noteSaved = req.body;
         
@@ -26,10 +26,10 @@ const router = express.Router();
             console.log('Note saved.');});
 
         res.json(noteSaved);
-    });
+    })
 
 
-    router.delete('/api/notes/:id', function (req, res) {
+    router.delete('/api/notes/:id', (req, res) => {
 
         let picked = req.params.id;
         for (let i = 0; i < notesArr.length; i++) {
