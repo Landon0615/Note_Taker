@@ -9,17 +9,7 @@ This is an application to let the user create a note, save a note and delete a n
 * [Questions](#questions)
 ### Installation:
 In order to install the necessary dependencies, open the console and run the following:
-``` npm i "express","fs", "http", "routes"
-### Usage:
-N.A.
-### License:
-This project is licensed under:
-None
-### Contributing:
-N.A.
-### Tests:
-In order to test open the console and run the following:
-```N.A.```
+npm i "express","fs", "http", "routes"
 ### Questions:
 If you have any questions contact me on [GitHub](https://github.com/Landon0615) or contact 
 Landon Waddell at Landon.waddell@gmail.com
